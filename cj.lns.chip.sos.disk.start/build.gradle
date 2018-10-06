@@ -61,11 +61,11 @@ task runnableJar(dependsOn:':cj.lns.chip.sos.disk:release',type: Jar) {
      include '**/*.jar'
  	}
  	 task release(type: Copy) {
-     dependsOn ":cj.lns.chip.sos.cube:releaseToDiskChip",":cj.lns.chip.sos.disk:release","releaseDiskStart"
+     dependsOn ":cj.lns.chip.sos.cube:release",":cj.lns.chip.sos.disk:release","releaseDiskStart"
  		doLast {
 			println 'netdisk 网盘 环境发布完毕!'
 		}
  	}
  	
-tasks.getByPath(':cj.lns.chip.sos.disk:release').mustRunAfter tasks.getByPath(':cj.lns.chip.sos.cube:releaseToDiskChip')
+tasks.getByPath(':cj.lns.chip.sos.disk:release').mustRunAfter tasks.getByPath(':cj.lns.chip.sos.cube:release')
  	
