@@ -1,0 +1,32 @@
+{
+	entryPoint : {
+		activators : []
+	},
+	assemblyInfo : {
+		assemblyTitle : "netdisk",
+		assemblyResource:"/assemblies",
+		assemblyDescription : "",
+		assemblyConfiguration : "",
+		assemblyCompany : "",
+		assemblyProduct : "cj.lns.chip.sos.disk",
+		assemblyCopyright : "Copyright   2011",
+		assemblyTrademark : "",
+		assemblyCulture : "",
+		guid : "7BCBABAE-49F4-42C4-A5AF-F9B592E33E8E",
+		assemblyVersion : "1.0.0.0",
+		assemblyFileVersion : "1.0.0.0"
+	},
+	global:{
+		default:"zh_CN",
+		desc:"如果系统环境要求各芯片采用的语言本芯片没有，则芯片可采用默认语言"
+		},
+	serviceContainer : {
+		name : "netContainer",
+		scans : [{
+					package : "cj.lns.chip.sos.disk",
+					extName : ".class|.json",
+					exoterical:"true"
+				}]
+
+	}
+}

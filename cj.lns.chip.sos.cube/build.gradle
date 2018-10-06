@@ -1,0 +1,45 @@
+sourceSets { 
+	 main { 
+	 	java{
+	 		srcDir "$projectDir/src"
+	 		exclude("**/test/*")
+	 	}
+	 	resources{
+		 	srcDir "$projectDir/site-src"
+		 }
+	 } 
+ 	}
+ 	sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+ 	tasks.withType(JavaCompile) {  
+        options.encoding = "UTF-8"  
+    } 
+ repositories { 
+	 flatDir(dirs: "../global/lib") 
+ } 
+
+dependencies {
+	//compile project(':cj.ultimate');
+	//compile project(':cj.studio.ecm.corelib');
+	compile fileTree(dir: '../global/cjtools', includes: ['*.jar'])
+	compile('org.mongodb:mongo-java-driver:3.2.0');
+	testCompile ('junit:junit:4.12') 
+	compile fileTree('src/cj/references')
+	compile fileTree('src/cj/refembeds')
+}
+ 	task releaseToOutputs(type: Copy) {
+ 	dependsOn "build"
+ 	 from 'build/libs/'
+	     into '../outputs/'
+	     include '**/*.jar'
+ 	}
+ 	task releaseToDiskChip(type: Copy) {
+ 	dependsOn "build"
+ 	 from 'build/libs/'
+	     into '../cj.lns.chip.sos.disk/src/cj/references'
+	     include '**/*.jar'
+ 	}
+ 	 task release(type: Copy) {
+     dependsOn "releaseToDiskChip","releaseToOutputs"
+ 	}
+ 	

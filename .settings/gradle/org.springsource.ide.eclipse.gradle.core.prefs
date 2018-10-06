@@ -1,0 +1,4 @@
+#org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
+#Sat Oct 06 23:27:24 CST 2018
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;cj.lns.chip.sos.cube;cj.lns.chip.sos.disk;cj.lns.chip.sos.disk.start;
+org.springsource.ide.eclipse.gradle.rootprojectloc=

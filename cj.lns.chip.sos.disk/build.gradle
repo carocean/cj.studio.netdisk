@@ -1,0 +1,44 @@
+sourceSets { 
+	 main { 
+	 	java{
+	 		srcDir "$projectDir/src"
+	 	}
+	 	resources{
+		 	srcDir "$projectDir/src"
+		 }
+	 } 
+ 	}
+ 		sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+ 	tasks.withType(JavaCompile) {  
+        options.encoding = "UTF-8"  
+    } 
+ repositories { 
+ 	mavenCentral();
+	 flatDir(dirs: "$projectDir/global/lib") 
+ } 
+ 
+dependencies {
+	//compile project(':cj.ultimate')
+	//compile project(':cj.studio.ecm.corelib')
+	//compile project(':cj.studio.ecm.net');
+	compile fileTree(dir: '../global/cjtools', includes: ['*.jar'])
+	compile project(':cj.lns.chip.sos.cube');
+	compile('org.mongodb:mongo-java-driver:3.2.0');
+	compile(
+            'commons-cli:commons-cli:1.2'
+    )
+    testCompile(
+        'junit:junit:4.11'
+    )
+	compile fileTree(dir: '../global/lib', includes: ['*.jar'])
+	compile fileTree('src/cj/references')
+	compile fileTree(dir: 'libs', includes: ['*.jar'])
+    runtime fileTree(dir: 'libs', includes: ['*.jar'])
+}
+    task release(type: Copy) {
+     dependsOn "build"
+     from 'build/libs/'
+     into '../cmdtools/disk/'
+     include '**/*.jar'
+ 	}

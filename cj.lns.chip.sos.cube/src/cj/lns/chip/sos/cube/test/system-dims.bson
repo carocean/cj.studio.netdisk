@@ -1,0 +1,3 @@
+{"_dimension":{"name":"createDate","alias":"创建日期","desc":"创建文档的时期，年、月、日"},"year":{"alias":"年","dataType":"java.lang.Integer"},"month":{"alias":"月","dataType":"java.lang.Integer"},"day":{"alias":"日","dataType":"java.lang.Integer"}}
+{"_dimension":{"name":"updateDate","alias":"更新日期","desc":"更新文档的时期，年、月、日"},"year":{"alias":"年","dataType":"java.lang.Integer"},"month":{"alias":"月","dataType":"java.lang.Integer"},"day":{"alias":"日","dataType":"java.lang.Integer"}}
+{"_dimension":{"name":"creator","alias":"创建人","desc":"谁创建的文档"},"user":{"alias":"用户代码","dataType":"java.lang.String"}}

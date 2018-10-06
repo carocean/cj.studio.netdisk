@@ -1,0 +1,1 @@
+{"_dimension":{"name":"product","alias":"产品","desc":"产品维度"},"category":{"alias":"大分类","dataType":"java.lang.String"},"kind":{"alias":"小类","dataType":"java.lang.String"},"style":{"alias":"规格","dataType":"java.lang.String"}}
