@@ -19,44 +19,43 @@
 **正文：**
  
 
-![目录](00.png)
+![目录](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/00.png)
 
-![目录](1.png)
+![目录](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/1.png)
 
 
-![查看帮助](0.png)
+![查看帮助](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/0.png)
 
-![连接本地的mognodb](2.png)
+![连接本地的mognodb](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/2.png)
 
-![列出网盘](3.png)
+![列出网盘](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/3.png)
 
-![网盘命令](4.png)
+![网盘命令](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/4.png)
 
-- 打开一个网盘
 
-![打开网盘](5.png)
+![打开网盘](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/5.png)
 
-![打开存储空间](6.png)
+![打开存储空间](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/6.png)
 
-![列出元数据](7.png)
+![列出元数据](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/7.png)
 
-![列出元组数据](7.png)
+![列出元组数据](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/7.png)
 
-![元组命令集](8.png)
+![元组命令集](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/8.png)
 
-![进入文件系统](9.png)
+![进入文件系统](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/9.png)
 
-![进入文件系统](9.png)
+![进入文件系统](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/9.png)
 
-![进入目录列出文件](10.png)
+![进入目录列出文件](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/10.png)
 
-![进入本地文件系统](11.png)
+![进入本地文件系统](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/11.png)
 
-![列出本地文件](12.png)
+![列出本地文件](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/12.png)
 
-![列出本地命令集](13.png)
+![列出本地命令集](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/13.png)
 
-![上传文件到网盘](14.png)
+![上传文件到网盘](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/14.png)
 
 ##netdisk 多维云盘开发工具包
 
