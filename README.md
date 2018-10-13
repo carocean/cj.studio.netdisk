@@ -1,18 +1,18 @@
-#Netdisk
+# Netdisk
 - 网盘工具
 - 基于mongodb实现
 - 支持结构化存储
 - 支持文件存储
 - 支持用户空间配额
 
-###章节
+### 章节
 - **netdisk 多维云盘命令行工具**
 
 - **netdisk 多维云盘开发工具包**
 
 
 
-##netdisk 多维云盘命令行工具
+## netdisk 多维云盘命令行工具
 **摘要：**mdisk是多维网盘的客户端命令行工具，只要你安装好了mongodb，将命令行工具连接上它就可以开始使用网盘了。
 
 下载mdisk，如欲使用最新版，到开发平台下载 
@@ -57,7 +57,7 @@
 
 ![上传文件到网盘](https://github.com/carocean/cj.studio.netdisk/blob/master/document/img/14.png)
 
-##netdisk 多维云盘开发工具包
+## netdisk 多维云盘开发工具包
 
 **摘要：**netdisk可以看成mongodb的一个增强工具包，它实现了用户空间配额、orm映射、类sql的查询、文件的存储、多维的方案等功能。 本包提供开发者使用多维云盘的能力，如果想作为成品或进行云盘的管理和测试请使用netdisk命令行工具 
   正文： 本文简要说明netdisk的使用 简要来说，一个mongodb实例可以被分成多个网盘netdisk,每个netdisk拥有一个或多个cube（即存储方案），其中只有一个名为home的cube，home在netdisk是主cube. 而每个cube里，包含两种数据，一种是结构化数据，称之为tuple，不定数目；一种是非结构化数据，在每个cube.fileSystem()中得到，即每个cube有一个文件系统。 记住，不论是tuple还是文件都是多维的，因此都有多维的api 
