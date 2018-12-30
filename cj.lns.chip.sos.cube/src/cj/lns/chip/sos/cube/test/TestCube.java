@@ -67,7 +67,7 @@ public class TestCube {
 				"/Users/jmal/git/diskcode/cj.lns.chip.sos.cube/src/cj/lns/chip/sos/cube/test/system-dims.bson");
 		conf.setCoordinateFile(
 				"/Users/jmal/git/diskcode/cj.lns.chip.sos.cube/src/cj/lns/chip/sos/cube/test/system-coordinates.bson");
-		ICube cube = Cube.create(client, "cj", conf);
+		ICube cube = Cube.create(client, "cj", conf,null);
 		System.out.println(cube);
 	}
 
@@ -212,7 +212,7 @@ public class TestCube {
 		List<MongoCredential> credential = new ArrayList<>();
 		MongoClientOptions options = MongoClientOptions.builder().build();
 		MongoClient client = new MongoClient(seeds, credential, options);
-		ICube cube = Cube.open(client, "zhaoxb");
+		ICube cube = Cube.open(client, "zhaoxb",null);
 		cube.deleteCube();
 	}
 
@@ -224,7 +224,7 @@ public class TestCube {
 		List<MongoCredential> credential = new ArrayList<>();
 		MongoClientOptions options = MongoClientOptions.builder().build();
 		MongoClient client = new MongoClient(seeds, credential, options);
-		ICube cube = Cube.open(client, "zhaoxb");
+		ICube cube = Cube.open(client, "zhaoxb",null);
 		FileSystem fs = cube.fileSystem();
 		if (fs.existsFile("/fuck2.txt")) {
 			FileInfo file = fs.openFile("/fuck2.txt", OpenMode.openOrNew);

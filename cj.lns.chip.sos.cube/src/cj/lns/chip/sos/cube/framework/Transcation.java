@@ -71,12 +71,14 @@ class Transcation implements ITranscation {
 	}
 	
 	public static ICube create(MongoClient client, String name, CubeConfig conf) {
-		Cube cube = new Cube();
+		return create(client, name, conf, Transcation.class.getClassLoader());
+	}
+	public static ICube create(MongoClient client, String name, CubeConfig conf,ClassLoader cl) {
+		Cube cube = new Cube(cl);
 		MongoDatabase cubedb = client.getDatabase(name);
 		cube.init(client,cubedb, conf);
 		return cube;
 	}
-
 	void record(String action, String cubeName, String tuplename, String docid, Object value) {
 		if ("qurey".equals(action))
 			return;

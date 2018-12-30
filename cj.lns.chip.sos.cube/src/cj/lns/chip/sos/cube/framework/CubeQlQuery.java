@@ -40,12 +40,17 @@ class CubeQlQuery<T> implements IQuery<T> {
 	private String sortbson;
 	private boolean hasDistinctFun;
 	private ITranscation transcation;
+	private ClassLoader classloader;
 	// private Class<?> distinctClazz;
 
-	public CubeQlQuery(ICube cube, String cubeql) {
-		this(cube,null,cubeql);
+	public CubeQlQuery(ICube cube, String cubeql,ClassLoader classLoader) {
+		this(cube,null,cubeql,classLoader);
 	}
-	public CubeQlQuery(ICube cube,ITranscation tran, String cubeql) {
+	public CubeQlQuery(ICube cube,ITranscation tran, String cubeql,ClassLoader classLoader) {
+		if(classLoader==null) {
+			classLoader=this.getClass().getClassLoader();
+		}
+		this.classloader=classLoader;
 		this.cube = (Cube) cube;
 		this.parameters = new HashMap<>();
 		pattern = Pattern.compile(
@@ -420,7 +425,7 @@ class CubeQlQuery<T> implements IQuery<T> {
 
 					Class<T> clazz = null;
 					try {
-						clazz = (Class<T>) Class.forName(tclazz.trim());
+						clazz = (Class<T>) Class.forName(tclazz.trim(),true,classloader);
 					} catch (ClassNotFoundException e) {
 						clazz = (Class<T>) Class.forName(tclazz.trim(), true,
 								Thread.currentThread().getContextClassLoader());
