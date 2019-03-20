@@ -3640,3 +3640,4 @@
 2017年06月13日 11:28:42  错误: cj.lns.chip.sos.disk.local.LocalConsole - java.io.FileNotFoundException: /Users/carocean/natural/pictures/e9c5841d-2dbe-4f82-bafd-90c653b8ac1f_5101733952881224807-2.jpg (Not a directory)
 2018年10月13日 10:04:55  错误: cj.lns.chip.sos.disk.usf.UsfConsole - 认证失败。
 2018年10月13日 10:06:46  错误: cj.lns.chip.sos.disk.cube.CubeConsole - 不认识的命令：local
+2018年11月30日 23:35:15  错误: cj.lns.chip.sos.disk.usf.UsfConsole - 认证失败。
