@@ -22,7 +22,7 @@ public class Main {
 
 	// java -jar cjnet -h 127.0.0.1:10000 -t udt -debug cmdassembly.jar
 	public static void main(String... args) throws IOException, ParseException {
-		fileName = "cj.lns.chip.sos.disk-1.0";
+		fileName = "cj.lns.chip.sos.disk";
 		Options options = new Options();
 		Option h = new Option("h", "host",true, "必须指定远程地址，格式：-h ip:port，port可以省去");
 		options.addOption(h);

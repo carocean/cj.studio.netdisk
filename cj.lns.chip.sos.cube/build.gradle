@@ -38,6 +38,7 @@ dependencies {
  	 from 'build/libs/'
 	     into '../cj.lns.chip.sos.disk/src/cj/references'
 	     include '**/*.jar'
+	     exclude '**/*-javadoc.jar','**/*-sources.jar'
  	}
  	 task release(type: Copy) {
      dependsOn "releaseToDiskChip","releaseToOutputs"

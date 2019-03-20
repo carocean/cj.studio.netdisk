@@ -41,4 +41,5 @@ dependencies {
      from 'build/libs/'
      into '../cmdtools/disk/'
      include '**/*.jar'
+     exclude '**/*-javadoc.jar','**/*-sources.jar'
  	}

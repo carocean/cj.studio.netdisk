@@ -59,6 +59,7 @@ task runnableJar(dependsOn:':cj.lns.chip.sos.disk:release',type: Jar) {
      from 'build/libs/'
      into '../cmdtools/disk/'
      include '**/*.jar'
+     exclude '**/*-javadoc.jar','**/*-sources.jar'
  	}
  	 task release(type: Copy) {
      dependsOn ":cj.lns.chip.sos.cube:release",":cj.lns.chip.sos.disk:release","releaseDiskStart"

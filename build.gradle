@@ -3,7 +3,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
 	apply plugin: 'maven'
-	version = '1.0'
+	version = engineer_version
     sourceSets { 
 	 main { 
 	 	java{
@@ -25,8 +25,8 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.8.2'
-         compile group: 'cj.studio.ecm', name: 'cj.ultimate', version: '1.0'
-    	compile group: 'cj.studio.ecm', name: 'cj.studio.ecm.corelib', version: '1.0'
+         compile group: 'cj.studio.ecm', name: 'cj.ultimate', version: ref_cj_ultimate_version
+    	compile group: 'cj.studio.ecm', name: 'cj.studio.ecm.corelib', version: ref_cj_studio_ecm_corelib_version
     }
     
      jar {
