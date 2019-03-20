@@ -14,30 +14,46 @@ public class NetDisk implements INetDisk {
 	String name;
 	private MongoClient client;
 	private DiskInfo info;
+	private ClassLoader classloader;
 	static INamedContainer container;
 
 	private NetDisk(String name, DiskInfo info, MongoClient client) {
+		this(name, info, client, null);
+	}
+
+	private NetDisk(String name, DiskInfo info, MongoClient client, ClassLoader loader) {
 		this.name = name;
 		this.client = client;
 		this.info = info;
+		if (loader == null) {
+			loader = this.getClass().getClassLoader();
+		}
+		this.classloader = loader;
 	}
 
 	public String name() {
 		return name;
 	}
+
 	/**
 	 * 打开磁盘
+	 * 
 	 * <pre>
 	 *
 	 * </pre>
+	 * 
 	 * @param client
-	 * @param name 磁盘名
+	 * @param name     磁盘名
 	 * @param userName
 	 * @param password
 	 * @return
 	 */
-	public static INetDisk open(MongoClient client, String name,
-			String userName, String password) {
+	public static INetDisk open(MongoClient client, String name, String userName, String password) {
+		return open(client, name, userName, password, NetDisk.class.getClassLoader());
+	}
+
+	public static INetDisk open(MongoClient client, String name, String userName, String password,
+			ClassLoader classloader) {
 		if (container == null) {
 			container = new NameContainer(client);
 		}
@@ -48,19 +64,26 @@ public class NetDisk implements INetDisk {
 		if (!verifyPassword(info, userName, password)) {
 			throw new EcmException("认证失败。");
 		}
-		NetDisk disk = new NetDisk(name, info, client);
+		NetDisk disk = new NetDisk(name, info, client, classloader);
 		return disk;
 	}
+
 	/**
 	 * 受信打开方式
+	 * 
 	 * <pre>
 	 *
 	 * </pre>
+	 * 
 	 * @param client
-	 * @param name 磁盘名
+	 * @param name   磁盘名
 	 * @return
 	 */
 	public static INetDisk trustOpen(MongoClient client, String name) {
+		return trustOpen(client, name, NetDisk.class.getClassLoader());
+	}
+
+	public static INetDisk trustOpen(MongoClient client, String name, ClassLoader classloader) {
 		if (container == null) {
 			container = new NameContainer(client);
 		}
@@ -68,35 +91,35 @@ public class NetDisk implements INetDisk {
 			throw new EcmException(String.format("不存在网盘：%s", name));
 		}
 		DiskInfo info = container.diskInfo(name);
-		NetDisk disk = new NetDisk(name, info, client);
+		NetDisk disk = new NetDisk(name, info, client, classloader);
 		return disk;
 	}
-	private static boolean verifyPassword(DiskInfo info, String userName,
-			String password) {
-		return userName.equals(info.attr("userName"))
-				&& password.equals(info.attr("password"));
+
+	private static boolean verifyPassword(DiskInfo info, String userName, String password) {
+		return userName.equals(info.attr("userName")) && password.equals(info.attr("password"));
 	}
-	
+
 	// 网盘维持系统盘，系统盘用于存网盘名，而一个网盘实例有一个内置立方体和共享立体
-	public static INetDisk create(MongoClient client, String name,
-			String userName, String password, DiskInfo info) {
+	public static INetDisk create(MongoClient client, String name, String userName, String password, DiskInfo info) {
+		return create(client, name, userName, password, info, NetDisk.class.getClassLoader());
+	}
+	public static INetDisk create(MongoClient client, String name, String userName, String password, DiskInfo info,ClassLoader cl) {
 		if (existsDisk(client, name)) {
 			throw new EcmException(String.format("已存在网盘：%s", name));
 		}
 		info.attrs.put("userName", userName);
 		info.attrs.put("password", password);
 		container.appendDiskName(client, name, info);
-		
-		NetDisk disk = new NetDisk(name, info, client);
+
+		NetDisk disk = new NetDisk(name, info, client,cl);
 
 		CubeConfig sharedconf = info.shared();
 		String sharedDbName = container.diskSharedCubePhyName(name);
-		ICube shared = Cube.create(client, sharedDbName, sharedconf);
+		ICube shared = Cube.create(client, sharedDbName, sharedconf,cl);
 		shared.close();
 
 		return disk;
 	}
-
 	public static boolean existsDisk(MongoClient client, String diskname) {
 		if (container == null) {
 			container = new NameContainer(client);
@@ -111,28 +134,28 @@ public class NetDisk implements INetDisk {
 		}
 		return container.enumDiskName();
 	}
+
 	@Override
-	public void deleteCube(String cubeName){
-		if("home".equalsIgnoreCase(cubeName)){
+	public void deleteCube(String cubeName) {
+		if ("home".equalsIgnoreCase(cubeName)) {
 			throw new EcmException("home存储空间不能删除");
 		}
 		if (!container.existsDiskName(name, cubeName)) {
-			throw new EcmException(
-					String.format("网盘%s中不存在存储空间%s", name, cubeName));
+			throw new EcmException(String.format("网盘%s中不存在存储空间%s", name, cubeName));
 		}
 		String phyname = container.diskCubePhyName(name, cubeName);
-		ICube cube= Cube.open(client, phyname);
-		container.removeCubeName(client,name,cubeName);
+		ICube cube = Cube.open(client, phyname,classloader);
+		container.removeCubeName(client, name, cubeName);
 		cube.deleteCube();
 	}
+
 	@Override
 	public ICube createCube(String cubeName, CubeConfig conf) {
-		if("home".equalsIgnoreCase(cubeName)){
+		if ("home".equalsIgnoreCase(cubeName)) {
 			throw new EcmException("home存储空间是保留名字");
 		}
 		if (container.existsDiskName(name, cubeName)) {
-			throw new EcmException(
-					String.format("网盘%s中已存在立方体%s", name, cubeName));
+			throw new EcmException(String.format("网盘%s中已存在立方体%s", name, cubeName));
 		}
 		String cubedbName = container.appendDiskName(client, name, cubeName);
 		if (!StringUtil.isEmpty(conf.alias())) {
@@ -140,7 +163,7 @@ public class NetDisk implements INetDisk {
 		} else {
 			conf.alias(cubeName);
 		}
-		ICube cube = Cube.create(client, cubedbName, conf);
+		ICube cube = Cube.create(client, cubedbName, conf,classloader);
 		return cube;
 	}
 
@@ -168,20 +191,22 @@ public class NetDisk implements INetDisk {
 	@Override
 	public ICube home() {
 		String phyname = container.diskSharedCubePhyName(name);
-		return Cube.open(client, phyname);
+		return Cube.open(client, phyname,classloader);
 	}
 
 	@Override
 	public ICube cube(String cubeName) {
-		if("home".equals(cubeName)){
+		if ("home".equals(cubeName)) {
 			return home();
 		}
 		String phyname = container.diskCubePhyName(name, cubeName);
-		return Cube.open(client, phyname);
+		return Cube.open(client, phyname,classloader);
 	}
-	public String getCubeName(String cubePhyName){
+
+	public String getCubeName(String cubePhyName) {
 		return container.diskCubeName(name, cubePhyName);
 	}
+
 	@Override
 	public void updateInfo() {
 		container.updateDiskInfo(name, info);
@@ -208,7 +233,7 @@ public class NetDisk implements INetDisk {
 		List<String> names = container.enumCubePhyName(name);
 		double ret = 0;
 		for (String n : names) {
-			ICube cube = Cube.open(client, n);
+			ICube cube = Cube.open(client, n,classloader);
 			ret += cube.dataSize();
 		}
 		return ret;
@@ -219,7 +244,7 @@ public class NetDisk implements INetDisk {
 		List<String> names = container.enumCubePhyName(name);
 		double ret = 0;
 		for (String n : names) {
-			ICube cube = Cube.open(client, n);
+			ICube cube = Cube.open(client, n,classloader);
 			ret += cube.usedSpace();
 		}
 		return ret;

@@ -44,7 +44,12 @@ import cj.ultimate.util.StringUtil;
 public class Cube implements ICube {
 	protected MongoDatabase cubedb;
 	protected MongoClient client;
-	public Cube() {
+	private ClassLoader classloader;
+	public Cube(ClassLoader cl) {
+		if(cl==null) {
+			cl=this.getClass().getClassLoader();
+		}
+		this.classloader=cl;
 	}
 
 	@Override
@@ -922,7 +927,7 @@ public class Cube implements ICube {
 
 	@Override
 	public <T> IQuery<T> count(String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, cubeql);
+		IQuery<T> q = new CubeQlQuery<T>(this, cubeql,classloader);
 		return q;
 	}
 
@@ -938,7 +943,7 @@ public class Cube implements ICube {
 
 	@Override
 	public <T> IQuery<T> createQuery(String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, cubeql);
+		IQuery<T> q = new CubeQlQuery<T>(this, cubeql,classloader);
 		return q;
 	}
 	
@@ -1205,9 +1210,11 @@ public class Cube implements ICube {
 	public void deleteCube() {
 		cubedb.drop();
 	}
-
 	public static ICube open(MongoClient client, String name) {
-		Cube cube = new Cube();
+		return open(client, name, Cube.class.getClassLoader());
+	}
+	public static ICube open(MongoClient client, String name,ClassLoader cl) {
+		Cube cube = new Cube(cl);
 		cube.load(client,client.getDatabase(name));
 		return cube;
 	}
@@ -1222,8 +1229,8 @@ public class Cube implements ICube {
 		return false;
 	}
 
-	public static ICube create(MongoClient client, String name, CubeConfig conf) {
-		Cube cube = new Cube();
+	public static ICube create(MongoClient client, String name, CubeConfig conf,ClassLoader cl) {
+		Cube cube = new Cube(cl);
 		MongoDatabase cubedb = client.getDatabase(name);
 		cube.init(client,cubedb, conf);
 		return cube;
@@ -1241,13 +1248,13 @@ public class Cube implements ICube {
 
 	@Override
 	public <T> IQuery<T> count(ITranscation tran, String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql);
+		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql,classloader);
 		return q;
 	}
 
 	@Override
 	public <T> IQuery<T> createQuery(ITranscation tran, String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql);
+		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql,classloader);
 		return q;
 	}
 
