@@ -9,6 +9,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.ListIndexesIterable;
 import com.mongodb.client.model.IndexModel;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.UpdateOptions;
@@ -240,6 +241,10 @@ public interface ICube {
 	String createIndex(String tupleName, Bson keys);
 	String createIndex(String tupleName, Bson keys, IndexOptions indexOptions);
 	List<String> createIndexes(String tupleName, List<IndexModel> indexes);
+	void dropIndex(String tupleName,String indexName);
+	void dropIndex(String tupleName,Bson keys);
+	ListIndexesIterable<Document> listIndexes(String tupleName);
+	 <TResult> ListIndexesIterable<TResult> listIndexes(String tupleName,Class<TResult> resultClass);
 	long tupleCount(String colname);
 	long tupleCount(ITranscation tran,String colname);
 	long tupleCount(String colname, String where);

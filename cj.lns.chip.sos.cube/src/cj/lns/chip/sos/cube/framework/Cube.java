@@ -24,6 +24,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.DistinctIterable;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.ListIndexesIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -45,20 +46,21 @@ public class Cube implements ICube {
 	protected MongoDatabase cubedb;
 	protected MongoClient client;
 	private ClassLoader classloader;
+
 	public Cube(ClassLoader cl) {
-		if(cl==null) {
-			cl=this.getClass().getClassLoader();
+		if (cl == null) {
+			cl = this.getClass().getClassLoader();
 		}
-		this.classloader=cl;
+		this.classloader = cl;
 	}
 
 	@Override
 	public String name() {
 		return cubedb.getName();
 	}
-	
-	public void init(MongoClient client,MongoDatabase cubedb, CubeConfig conf) {
-		this.client=client;
+
+	public void init(MongoClient client, MongoDatabase cubedb, CubeConfig conf) {
+		this.client = client;
 		this.cubedb = cubedb;
 		String systemDims = "system_dims";
 		String systemCoords = "system_coordinates";
@@ -504,9 +506,8 @@ public class Cube implements ICube {
 	 * 
 	 * @param tupleName
 	 * @param tupleClazz
-	 * @param coordinates
-	 *            维度坐标集合，key是维度名，一个维度只能传入一个坐标 <br>
-	 *            注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
+	 * @param coordinates 维度坐标集合，key是维度名，一个维度只能传入一个坐标 <br>
+	 *                    注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
 	 * @return
 	 */
 	@Override
@@ -540,9 +541,8 @@ public class Cube implements ICube {
 	 * 
 	 * @param tupleName
 	 * @param tupleClazz
-	 * @param coordinates
-	 *            维度坐标集合，key是维度名，一个维度只能传入一个坐标 <br>
-	 *            注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
+	 * @param coordinates 维度坐标集合，key是维度名，一个维度只能传入一个坐标 <br>
+	 *                    注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
 	 * @return
 	 */
 	@Override
@@ -587,14 +587,12 @@ public class Cube implements ICube {
 	 * </pre>
 	 * 
 	 * @param dimName
-	 * @param coordinate
-	 *            注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。<br>
-	 *            注意坐标值的数据类型，如果类型不对，根据mongodb的bson规则就查不出来。<br>
-	 *            注意要与维度级别属性定义的类型匹配，该方法根据级别属性定义的类型对坐标成员值进行了简单的转换，转换的类型有：java.
-	 *            lang.String,java.lang.Integer,java.lang.Long
+	 * @param coordinate 注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。<br>
+	 *                   注意坐标值的数据类型，如果类型不对，根据mongodb的bson规则就查不出来。<br>
+	 *                   注意要与维度级别属性定义的类型匹配，该方法根据级别属性定义的类型对坐标成员值进行了简单的转换，转换的类型有：java.
+	 *                   lang.String,java.lang.Integer,java.lang.Long
 	 * @param replace
-	 * @param lookAll
-	 *            每级是否包括全部子级及所有孙级成员的查询，false只查询本级的直接成员，如同目录只列出其直接包含的文件。
+	 * @param lookAll    每级是否包括全部子级及所有孙级成员的查询，false只查询本级的直接成员，如同目录只列出其直接包含的文件。
 	 */
 	@Override
 	public void combineWhereByCoordinate(String dimName, Coordinate coordinate, StringBuffer replace, boolean lookAll) {
@@ -657,8 +655,7 @@ public class Cube implements ICube {
 	 * @param tupleName
 	 * @param tupleClazz
 	 * @param dimName
-	 * @param coordinate
-	 *            注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
+	 * @param coordinate 注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
 	 * @return
 	 */
 	@Override
@@ -690,10 +687,8 @@ public class Cube implements ICube {
 	 * @param tupleName
 	 * @param tupleClazz
 	 * @param dimName
-	 * @param coordinate
-	 *            注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
-	 * @param limit
-	 *            如果小于0则为不受限，所回所有
+	 * @param coordinate 注意：参数中的坐标必须钻到实际元组的位置，如果都在坐标头，那查出来的只能是按坐标头的结果。
+	 * @param limit      如果小于0则为不受限，所回所有
 	 * @return
 	 */
 	@Override
@@ -927,7 +922,7 @@ public class Cube implements ICube {
 
 	@Override
 	public <T> IQuery<T> count(String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, cubeql,classloader);
+		IQuery<T> q = new CubeQlQuery<T>(this, cubeql, classloader);
 		return q;
 	}
 
@@ -943,10 +938,10 @@ public class Cube implements ICube {
 
 	@Override
 	public <T> IQuery<T> createQuery(String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, cubeql,classloader);
+		IQuery<T> q = new CubeQlQuery<T>(this, cubeql, classloader);
 		return q;
 	}
-	
+
 	@Override
 	public <T> IDocument<T> document(String colname, String docid, Class<T> clazz) {
 		String cjql = "select {'tuple':'*'} from tuple ?(colname) ?(clazz) where {'_id':ObjectId('?(docid)')}";
@@ -998,6 +993,26 @@ public class Cube implements ICube {
 	}
 
 	@Override
+	public void dropIndex(String tupleName, Bson keys) {
+		this.cubedb.getCollection(tupleName).dropIndex(keys);
+	}
+
+	@Override
+	public void dropIndex(String tupleName, String indexName) {
+		this.cubedb.getCollection(tupleName).dropIndex(indexName);
+	}
+
+	@Override
+	public ListIndexesIterable<Document> listIndexes(String tupleName) {
+		return this.cubedb.getCollection(tupleName).listIndexes();
+	}
+
+	@Override
+	public <TResult> ListIndexesIterable<TResult> listIndexes(String tupleName, Class<TResult> resultClass) {
+		return this.cubedb.getCollection(tupleName).listIndexes(resultClass);
+	}
+
+	@Override
 	public String saveDoc(String tupleName, IDocument<?> doc) {
 		return saveDoc(null, tupleName, doc, false);
 	}
@@ -1044,7 +1059,7 @@ public class Cube implements ICube {
 			}
 			if (tran != null) {
 				Transcation tn = (Transcation) tran;
-				tn.record("save", name(),tupleName, id, document);
+				tn.record("save", name(), tupleName, id, document);
 			}
 			return id;
 		}
@@ -1156,7 +1171,7 @@ public class Cube implements ICube {
 		Document nd = new Document("$set", doc);
 		if (tran != null) {
 			Transcation t = (Transcation) tran;
-			t.record("update", name(), tupleName, docid,null);
+			t.record("update", name(), tupleName, docid, null);
 		}
 		// col.replaceOne(bson, doc);
 		if (options == null) {
@@ -1201,7 +1216,7 @@ public class Cube implements ICube {
 		return result.getDeletedCount();
 	}
 
-	private void load(MongoClient client,MongoDatabase cubedb) {
+	private void load(MongoClient client, MongoDatabase cubedb) {
 		this.cubedb = cubedb;
 		this.client = client;
 	}
@@ -1210,12 +1225,14 @@ public class Cube implements ICube {
 	public void deleteCube() {
 		cubedb.drop();
 	}
+
 	public static ICube open(MongoClient client, String name) {
 		return open(client, name, Cube.class.getClassLoader());
 	}
-	public static ICube open(MongoClient client, String name,ClassLoader cl) {
+
+	public static ICube open(MongoClient client, String name, ClassLoader cl) {
 		Cube cube = new Cube(cl);
-		cube.load(client,client.getDatabase(name));
+		cube.load(client, client.getDatabase(name));
 		return cube;
 	}
 
@@ -1229,10 +1246,10 @@ public class Cube implements ICube {
 		return false;
 	}
 
-	public static ICube create(MongoClient client, String name, CubeConfig conf,ClassLoader cl) {
+	public static ICube create(MongoClient client, String name, CubeConfig conf, ClassLoader cl) {
 		Cube cube = new Cube(cl);
 		MongoDatabase cubedb = client.getDatabase(name);
-		cube.init(client,cubedb, conf);
+		cube.init(client, cubedb, conf);
 		return cube;
 	}
 
@@ -1248,13 +1265,13 @@ public class Cube implements ICube {
 
 	@Override
 	public <T> IQuery<T> count(ITranscation tran, String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql,classloader);
+		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql, classloader);
 		return q;
 	}
 
 	@Override
 	public <T> IQuery<T> createQuery(ITranscation tran, String cubeql) {
-		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql,classloader);
+		IQuery<T> q = new CubeQlQuery<T>(this, tran, cubeql, classloader);
 		return q;
 	}
 
