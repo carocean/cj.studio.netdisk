@@ -19,7 +19,7 @@ subprojects {
     repositories {
        mavenCentral()
        maven{
-       	url "http://localhost:65000/nexus/content/repositories/netos"
+       	url "http://47.105.165.186/nexus/content/repositories/netos/"
        }
     }
 
@@ -80,8 +80,8 @@ subprojects {
 					}
 				}
 			 
-		        repository(url: "http://localhost:65000/nexus/content/repositories/netos"){
-					authentication(userName:"admin",password:"admin123")
+		        repository(url: "http://47.105.165.186/nexus/content/repositories/netos/"){
+					authentication(userName:"deployment",password:"deployment123")
 		        }
 			}
 		}

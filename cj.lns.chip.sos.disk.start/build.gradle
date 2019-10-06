@@ -17,8 +17,7 @@ sourceSets {
     } 
  repositories { 
  	mavenCentral();
-	 flatDir(dirs: "$projectDir/global/lib") 
- } 
+ }
  jar {
     manifest {
         attributes 'Manifest-Version': version,
@@ -29,17 +28,14 @@ sourceSets {
 }
 
 dependencies {
-	//compile project(':cj.ultimate')
-	//compile project(':cj.studio.ecm.corelib')
-	//compile project(':cj.studio.ecm.net');
 	compile(
             'commons-cli:commons-cli:1.2'
     )
+    // https://mvnrepository.com/artifact/log4j/log4j
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
     testCompile(
         'junit:junit:4.11'
     )
-    compile fileTree(dir: '../global/cjtools', includes: ['*.jar'])
-	compile fileTree(dir: '../global/lib', includes: ['*.jar'])
 	compile fileTree(dir: 'libs', includes: ['*.jar'])
     runtime fileTree(dir: 'libs', includes: ['*.jar'])
 }

@@ -1,27 +1,27 @@
 package cj.lns.chip.sos.disk;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Logger;
-
+import cj.lns.chip.sos.disk.usf.UsfConsole;
+import cj.studio.ecm.CJSystem;
+import cj.studio.ecm.annotation.CjService;
+import cj.studio.ecm.annotation.CjServiceRef;
+import cj.studio.ecm.logging.ILogging;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import org.apache.commons.cli.CommandLine;
 
-import cj.lns.chip.sos.disk.usf.UsfConsole;
-import cj.studio.ecm.annotation.CjService;
-import cj.studio.ecm.annotation.CjServiceRef;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @CjService(name = "diskMain", isExoteric = true)
 public class DiskMain {
-	Logger logger = Logger.getLogger(DiskMain.class);
+	ILogging logger;
 	@CjServiceRef(refByName="usfConsole")
 	UsfConsole console;
 	public void main(CommandLine line) throws IOException {
+		logger= CJSystem.logging();
 		String conStr = line.getOptionValue("h");
 
 		List<ServerAddress> seeds = new ArrayList<>();
@@ -39,7 +39,7 @@ public class DiskMain {
 		}
 		MongoClientOptions options = MongoClientOptions.builder().build();
 		MongoClient client = new MongoClient(seeds, credential, options);
-		logger.info("连接远程服务器成功。");
+		logger.info(getClass(),"连接远程服务器成功。");
 		console.monitor(client);
 		System.out.println("正在退出...");
 		if (client != null) {
