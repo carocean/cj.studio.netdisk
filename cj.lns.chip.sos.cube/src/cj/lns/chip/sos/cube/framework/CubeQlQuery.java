@@ -78,6 +78,7 @@ class CubeQlQuery<T> implements IQuery<T> {
 	 * </pre>
 	 */
 	protected void parse(String cubeql) {
+		cubeql=cubeql.trim();
 		Matcher m = pattern.matcher(cubeql);
 		if (!m.matches() || (m.groupCount() != 4)) {
 			throw new EcmException(
