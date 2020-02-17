@@ -277,7 +277,7 @@ public class Cube implements ICube {
 
 	@Override
 	public void updateCubeConfig(CubeConfig config) {
-		String cql = "select {'tuple':'*'} " + " from     tuple system_config   ?(tupleClass) ";
+		String cql = "select {'tuple':'*'} " + " from     tuple system_config   ?(tupleClass) where {}";
 		IQuery<CubeConfig> q = createQuery(cql);
 		q.setParameter("tupleClass", CubeConfig.class.getName());
 		IDocument<CubeConfig> conf = q.getSingleResult();
@@ -334,7 +334,7 @@ public class Cube implements ICube {
 
 	@Override
 	public CubeConfig config() {
-		String cql = "select {'tuple':'*'} " + " from     tuple system_config   ?(tupleClass) ";
+		String cql = "select {'tuple':'*'} " + " from     tuple system_config   ?(tupleClass) where {}";
 		IQuery<CubeConfig> q = createQuery(cql);
 		q.setParameter("tupleClass", CubeConfig.class.getName());
 		IDocument<CubeConfig> conf = q.getSingleResult();
