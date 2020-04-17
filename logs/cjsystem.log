@@ -1,0 +1,11 @@
+2020年04月15日 12:06:11  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。
+2020年04月15日 12:06:19  错误: cj.lns.chip.sos.disk.usf.UsfConsole - Query failed with error code 13 and error message 'command find requires authentication' on server 47.104.128.137:27017
+2020年04月15日 12:06:59  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。
+2020年04月15日 12:08:25  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。
+2020年04月15日 12:08:35  错误: cj.lns.chip.sos.disk.usf.UsfConsole - Query failed with error code 13 and error message 'not authorized on lns_namespace to execute command { find: "named_container", filter: { parent: "-1" }, $db: "lns_namespace" }' on server 47.104.128.137:27017
+2020年04月15日 12:14:34  错误: cj.lns.chip.sos.disk.usf.UsfConsole - Query failed with error code 13 and error message 'not authorized on lns_namespace to execute command { find: "named_container", filter: { parent: "-1" }, $db: "lns_namespace" }' on server 47.104.128.137:27017
+2020年04月15日 12:14:43  错误: cj.lns.chip.sos.disk.usf.UsfConsole - Query failed with error code 13 and error message 'not authorized on lns_namespace to execute command { find: "named_container", filter: { parent: "-1" }, $db: "lns_namespace" }' on server 47.104.128.137:27017
+2020年04月15日 12:31:13  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。
+2020年04月15日 12:31:29  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。
+2020年04月17日 18:29:17  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。
+2020年04月17日 18:29:48  信息: cj.lns.chip.sos.disk.DiskMain - 连接远程服务器成功。

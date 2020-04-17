@@ -34,7 +34,7 @@ public class DiskMain {
 		List<MongoCredential> credential = new ArrayList<>();
 		if(line.hasOption("u")&&line.hasOption("p")/*&&line.hasOption("db")*/){
 			MongoCredential m = MongoCredential.createCredential(
-					line.getOptionValue("u"), "test"/*line.getOptionValue("db")*/, line.getOptionValue("p").toCharArray());
+					line.getOptionValue("u"), "admin"/*line.getOptionValue("db")*/, line.getOptionValue("p").toCharArray());
 			credential.add(m);
 		}
 		MongoClientOptions options = MongoClientOptions.builder().build();
