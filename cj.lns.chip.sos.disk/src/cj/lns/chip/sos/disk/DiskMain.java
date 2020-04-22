@@ -37,7 +37,7 @@ public class DiskMain {
 					line.getOptionValue("u"), "admin"/*line.getOptionValue("db")*/, line.getOptionValue("p").toCharArray());
 			credential.add(m);
 		}
-		MongoClientOptions options = MongoClientOptions.builder().build();
+		MongoClientOptions options = MongoClientOptions.builder().socketKeepAlive(true).heartbeatSocketTimeout(5000).heartbeatConnectTimeout(5000).build();
 		MongoClient client = new MongoClient(seeds, credential, options);
 		logger.info(getClass(),"连接远程服务器成功。");
 		console.monitor(client);
